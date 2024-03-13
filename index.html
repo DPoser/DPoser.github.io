@@ -62,18 +62,19 @@
       <h3>
         <a href="https://scholar.google.com/citations?user=hnJ4NIYAAAAJ" target="_blank" rel="noopener noreferrer">Junzhe Lu</a><sup>1</sup>,
         <a href="https://jinglin7.github.io" target="_blank" rel="noopener noreferrer">Jing Lin</a><sup>2</sup>,
-        <a href="https://scholar.google.com/citations?user=pSNEkEwAAAAJ" target="_blank" rel="noopener noreferrer">Hongkun Dou</a><sup>1</sup>,
-        <a href="https://yulunzhang.com/" target="_blank" rel="noopener noreferrer">Yulun Zhang</a><sup>3</sup>,
+        <a href="https://scholar.google.com/citations?user=pSNEkEwAAAAJ" target="_blank" rel="noopener noreferrer">Hongkun Dou</a><sup>1</sup>,<br>
+        <a href="https://ailingzeng.site/" target="_blank" rel="noopener noreferrer">Ailing Zeng</a><sup>3</sup>,
         <a href="https://shi.buaa.edu.cn/yuedeng/en/index.htm" target="_blank" rel="noopener noreferrer">Yue Deng</a><sup>1</sup>,
+        <a href="https://yulunzhang.com/" target="_blank" rel="noopener noreferrer">Yulun Zhang</a><sup>4</sup>,
         and
         <a href="https://www.sigs.tsinghua.edu.cn/whq_en/main.htm" target="_blank" rel="noopener noreferrer">Haoqian Wang</a><sup>2</sup>
       </h3>
-      <h5><sup>1</sup>Beihang University, <sup>2</sup>Tsinghua University, <sup>3</sup>ETH Zürich
+      <h5><sup>1</sup>Beihang University, <sup>2</sup>Tsinghua University, <sup>3</sup>International Digital Economy Academy (IDEA), <sup>4</sup>ETH Zürich
       </h5>
 
       <div class="publications project-links">
         <a href="https://arxiv.org/abs/2312.05541" class="btn" role="button" target="_blank" rel="noopener noreferrer">arXiv</a>
-        <a href="https://youtu.be/tbi8nwTaV3M" class="btn" role="button" target="_blank" rel="noopener noreferrer">Video</a>
+        <a href="https://youtu.be/4EvHpTYOv-o" class="btn" role="button" target="_blank" rel="noopener noreferrer">Video</a>
         <a href="https://github.com/careless-lu/DPoser" class="btn" role="button" target="_blank" rel="noopener noreferrer">Code</a>
       </div>
       <br>
@@ -87,18 +88,10 @@
       <div class="project-narrow" id="abstract" style="text-align: justify;">
         <h3 style="text-align: center;">Abstract</h3>
         <i>
-          Modeling human pose is a cornerstone in applications from human-robot interaction to augmented reality, 
-          yet crafting a robust human pose prior remains a challenge due to biomechanical constraints and diverse human movements. 
-          Traditional priors like VAEs and NDFs often fall short in realism and generalization, 
-          especially in extreme conditions such as unseen noisy poses. To address these issues, we introduce DPoser, 
-          a robust and versatile human pose prior built upon diffusion models. 
-          Designed with optimization frameworks, DPoser seamlessly integrates into various pose-centric applications, 
-          including human mesh recovery, pose completion, and motion denoising. 
-          Specifically, by formulating these tasks as inverse problems, we employ variational diffusion sampling for efficient solving. 
-          Furthermore, acknowledging the disparity between the articulated poses we focus on and structured images in previous research, 
-          we propose a truncated timestep scheduling to boost performance on downstream tasks. 
-          Our exhaustive experiments demonstrate DPoser's superiority over existing state-of-the-art pose priors across multiple tasks. 
-          All the code and models will be released publicly.
+          This work targets to construct a robust human pose prior. However, it remains a persistent challenge due to biomechanical constraints and diverse human movements. Traditional priors like VAEs and NDFs often exhibit shortcomings in realism and generalization, notably with unseen noisy poses. To address these issues, we introduce DPoser, a robust and versatile human pose prior built upon diffusion models. 
+          DPoser regards various pose-centric tasks as inverse problems and employs variational diffusion sampling for efficient solving. Accordingly, designed with optimization frameworks, DPoser seamlessly benefits human mesh recovery, pose generation, pose completion, and motion denoising tasks. Furthermore, due to the disparity between the articulated poses and structured images, we propose truncated timestep scheduling to enhance the effectiveness of DPoser. 
+          Our approach demonstrates considerable enhancements over common uniform scheduling used in image domains, boasting improvements of 5.4\%, 17.2\%, and 3.8\% across human mesh recovery, pose completion, and motion denoising, respectively.
+          Comprehensive experiments demonstrate the superiority of DPoser over existing state-of-the-art pose priors across multiple tasks. 
         </i>
       </div>
     </div>
@@ -111,7 +104,7 @@
 
     <div class="center-container">
       <div class="card card-video" style="margin-top:20px">
-        <iframe width="100%" style="aspect-ratio: 16 / 9;" src="https://www.youtube.com/embed/tbi8nwTaV3M?si=GHP72qbBmF673e8S"
+        <iframe width="100%" style="aspect-ratio: 16 / 9;" src="https://www.youtube.com/embed/4EvHpTYOv-o?si=TFBzC0RwPHUVy9W4"
           title="DPoser: Diffusion Model as Robust 3D Human Pose Prior" frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen></iframe>
@@ -212,15 +205,15 @@
               <div class="tab-pane fade show active gif" id="right-arm" role="tabpanel">
                 <div style="display: flex; justify-content: space-around;">
                   <div style="width: 100%;"> <!-- Adjusted width -->
-                    <img class="gif" src="./assets/img/completion/case2.png">
+                    <img class="gif" src="./assets/img/completion/case1.png">
                   </div>
                 </div>
-                <p style="text-align: center; color:purple"><b><i> Right arm under occlusion.</i></b></p>
+                <p style="text-align: center; color:purple"><b><i> Left leg under occlusion.</i></b></p>
               </div>
               <div class="tab-pane fade" id="trunk" role="tabpanel">
                 <div style="display: flex; justify-content: space-around;">
                   <div style="width: 100%;"> <!-- Adjusted width -->
-                    <img class="gif" src="./assets/img/completion/case3.png">
+                    <img class="gif" src="./assets/img/completion/case2.png">
                   </div>
                 </div>
                 <p style="text-align: center; color:purple"><b><i>Trunk under occlusion.</i></b></p>
@@ -262,7 +255,7 @@
               <div class="tab-pane fade show active gif" id="default-camera" role="tabpanel">
                 <div style="display: flex; justify-content: space-around;">
                   <div style="width: 100%;"> <!-- Adjusted width -->
-                    <img class="gif" src="./assets/img/hmr/case1.jpg">
+                    <img class="gif" src="./assets/img/hmr/case1.png">
                   </div>
                 </div>
                 <p style="text-align: center; color:purple"><b><i> Initialization using mean poses and default camera.</i></b></p>
@@ -271,7 +264,7 @@
               <div class="tab-pane fade" id="cliff" role="tabpanel">
                 <div style="display: flex; justify-content: space-around;">
                   <div style="width: 100%;"> <!-- Adjusted width -->
-                    <img class="gif" src="./assets/img/hmr/case2.jpg">
+                    <img class="gif" src="./assets/img/hmr/case2.png">
                   </div>
                 </div>
                 <p style="text-align: center; color:purple"><b><i> Initialization using the CLIFF model.</i></b></p>
@@ -326,28 +319,23 @@
             <div class="dropdown list-group">
               <button class="btn dropdown-toggle" style="max-width:600px" type="button" id="motion-denoising-btn"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="selection">20mm noise</span>
+                <span class="selection">40mm noise</span>
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="list-tab" role="tablist">
-                <a class="dropdown-item dropdown-item-action" href="#noise20mm" id="motion-denoising-dropdown" data-toggle="list"
-                  role="tab" aria-controls="noise20mm">20mm noise</a>
                 <a class="dropdown-item dropdown-item-action" href="#noise40mm" id="motion-denoising-dropdown" data-toggle="list"
                   role="tab" aria-controls="noise40mm">40mm noise</a>
                   <a class="dropdown-item dropdown-item-action" href="#noise100mm" id="motion-denoising-dropdown" data-toggle="list"
-                  role="tab" aria-controls="noise40mm">100mm noise</a>
+                  role="tab" aria-controls="noise100mm">100mm noise</a>
+                  <a class="dropdown-item dropdown-item-action" href="#left_arm" id="motion-denoising-dropdown" data-toggle="list"
+                  role="tab" aria-controls="left_arm">left arm occluded</a>
+                  <a class="dropdown-item dropdown-item-action" href="#right_body" id="motion-denoising-dropdown" data-toggle="list"
+                  role="tab" aria-controls="right_body">right body occluded</a>
               </div>
             </div>
           </div>
           <div class="card" style="padding: 10px !important; margin-top:10px; margin-left: auto; margin-right: auto; max-width: 1170px;"> <!-- Adjusted max-width and margins -->
             <div class="tab-content figure" id="nav-tabContent">
-              <div class="tab-pane fade show active gif" id="noise20mm" role="tabpanel">
-                <div style="display: flex; justify-content: space-around;">
-                  <div style="width: 100%;"> <!-- Adjusted width -->
-                    <img class="gif" src="./assets/img/motion/noise20mm.gif">
-                  </div>
-                </div>
-              </div>
-              <div class="tab-pane fade" id="noise40mm" role="tabpanel">
+              <div class="tab-pane fade show active gif" id="noise40mm" role="tabpanel">
                 <div style="display: flex; justify-content: space-around;">
                   <div style="width: 100%;"> <!-- Adjusted width -->
                     <img class="gif" src="./assets/img/motion/noise40mm.gif">
@@ -361,8 +349,22 @@
                   </div>
                 </div>
               </div>
-              <p style="text-align: justify; margin: 10px;">Although not originally designed for temporal tasks, DPoser's adeptness in motion denoising is remarkable. 
-                Its ability to clean up noisy 3D joint sequences showcases the model's adaptability and effectiveness.
+              <div class="tab-pane fade" id="left_arm" role="tabpanel">
+                <div style="display: flex; justify-content: space-around;">
+                  <div style="width: 100%;"> <!-- Adjusted width -->
+                    <img class="gif" src="./assets/img/motion/left_arm.gif">
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="right_body" role="tabpanel">
+                <div style="display: flex; justify-content: space-around;">
+                  <div style="width: 100%;"> <!-- Adjusted width -->
+                    <img class="gif" src="./assets/img/motion/right_body.gif">
+                  </div>
+                </div>
+              </div>
+              <p style="text-align: justify; margin: 10px;">DPoser excels in reconstructing lifelike pose sequences from noisy and incomplete 3D joint data. 
+                Its application as a single-frame pose prior extends impressively to sequences, ensuring realistic movements.
               </p>
             </div>
           </div>
@@ -377,10 +379,10 @@
         <div class="bibtex">
 
           <figure class="highlight">
-            <pre><code class="language-bibtex" data-lang="bibtex"><span class="nc">@article</span><span class="p">{</span><span class="nl">lu2023dposer</span><span class="p">,</span>
+            <pre><code class="language-bibtex" data-lang="bibtex"><span class="nc">@article</span><span class="p">{</span><span class="nl">dposer</span><span class="p">,</span>
   <span class="na">title</span><span class="p">=</span><span class="s">{DPoser: Diffusion Model as Robust 3D Human Pose Prior}</span><span class="p">,</span>
-  <span class="na">author</span><span class="p">=</span><span class="s">{Lu, Junzhe and Lin, Jing and Dou, Hongkun and Zhang, Yulun and Deng, Yue and Wang, Haoqian}</span><span class="p">,</span>
-  <span class="na">journal</span><span class="p">=</span><span class="s">{arXiv preprint arXiv:2312.05541}</span><span class="p">,</span>
+  <span class="na">author</span><span class="p">=</span><span class="s">{Lu, Junzhe and Lin, Jing and Dou, Hongkun and Zeng, Ailing and Deng, Yue and Zhang, Yulun and Wang, Haoqian}</span><span class="p">,</span>
+  <span class="na">journal</span><span class="p">=</span><span class="s">{arxiv:2312.05541}</span><span class="p">,</span>
   <span class="na">year</span><span class="p">=</span><span class="s">{2023}</span>
 <span class="p">}</span></code></pre>
           </figure>
