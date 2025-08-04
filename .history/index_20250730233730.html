@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>DPoser-X: Diffusion Model as Robust 3D Whole-body Human Pose Prior</title>
+  <meta name="author" content="Junzhe Lu" />
+  <meta name="description" content="Project page for DPoser-X, a diffusion-based prior model for robust 3D whole-body human pose estimation." />
+  <meta name="keywords" content="DPoser-X, DPoser, 3d human pose, whole-body prior, diffusion models, computer vision" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+  <link rel="icon" href="./assets/figures/icon.png">
+  <link rel="stylesheet" href="./assets/css/main.css">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VHPFHC4JTP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-VHPFHC4JTP');
+  </script>
+</head>
+
+<body>
+
+  <div class="container project_container mt-5">
+    <header class="project-title" style="text-align: center;">
+      <h1 class="project-title" style="font-weight: bold; color: #333">
+        <img src="./assets/figures/icon.png" style="height:40px; width:40px; margin-bottom: 10px;">
+        DPoser-X: Diffusion Model as Robust <br> 3D Whole-body Human Pose Prior
+      </h1>
+      <h3>
+        <a href="https://scholar.google.com/citations?user=hnJ4NIYAAAAJ" target="_blank" rel="noopener noreferrer">Junzhe Lu</a><sup>1</sup>,
+        <a href="https://jinglin7.github.io" target="_blank" rel="noopener noreferrer">Jing Lin</a><sup>2</sup>,
+        <a href="https://scholar.google.com/citations?user=pSNEkE2wAAAAJ" target="_blank" rel="noopener noreferrer">Hongkun Dou</a><sup>1</sup>,<br>
+        <a href="https://ailingzeng.site/" target="_blank" rel="noopener noreferrer">Ailing Zeng</a><sup>3</sup>,
+        <a href="https://shi.buaa.edu.cn/yuedeng/en/index.htm" target="_blank" rel="noopener noreferrer">Yue Deng</a><sup>1</sup>,
+        <a href="https://yulunzhang.com/" target="_blank" rel="noopener noreferrer">Yulun Zhang</a><sup>4</sup>,
+        and
+        <a href="https://www.sigs.tsinghua.edu.cn/whq_en/main.htm" target="_blank" rel="noopener noreferrer">Haoqian Wang</a><sup>2</sup>
+      </h3>
+      <h5><sup>1</sup>Beihang University, <sup>2</sup>Tsinghua University, <sup>3</sup>International Digital Economy Academy (IDEA), <sup>4</sup>ETH Zürich</h5>
+
+      <div class="publications project-links">
+        <a href="https://arxiv.org/abs/2312.05541" class="btn" role="button" target="_blank" rel="noopener noreferrer">arXiv</a>
+        <a href="https://youtu.be/4EvHpTYOv-o" class="btn" role="button" target="_blank" rel="noopener noreferrer">Video</a>
+        <a href="https://github.com/careless-lu/DPoser" class="btn" role="button" target="_blank" rel="noopener noreferrer">Code</a>
+      </div>
+      <br>
+      <img src="./assets/figures/overview.png" alt="DPoser-X Overview" style="width: 100%;">
+    </header>
+
+    <div class="project-narrow" id="abstract" style="text-align: justify; margin-top: 30px;">
+        <h3 style="text-align: center;">Abstract</h3>
+        <p><i>
+          [cite_start]We present <b>DPoser-X</b>, a diffusion-based prior model for 3D whole-body human poses[cite: 42]. [cite_start]Building a versatile and robust full-body human pose prior remains challenging due to the inherent complexity of articulated human poses and the scarcity of high-quality whole-body pose datasets[cite: 43]. [cite_start]To address these limitations, we introduce a Diffusion model as body Pose prior (DPoser) and extend it to DPoser-X for expressive whole-body human pose modeling[cite: 44]. [cite_start]Our approach unifies various pose-centric tasks as inverse problems, solving them through variational diffusion sampling[cite: 45]. [cite_start]To enhance performance on downstream applications, we introduce a novel truncated timestep scheduling method specifically designed for pose data characteristics[cite: 46]. [cite_start]We also propose a masked training mechanism that effectively combines whole-body and part-specific datasets, enabling our model to capture interdependencies between body parts while avoiding overfitting to specific actions[cite: 47]. [cite_start]Extensive experiments demonstrate DPoser-X's robustness and versatility across multiple benchmarks for body, hand, face, and full-body pose modeling[cite: 48]. [cite_start]Our model consistently outperforms state-of-the-art alternatives, establishing a new benchmark for whole-body human pose prior modeling[cite: 49].
+        </i></p>
+    </div>
+
+    <div style="margin-top: 30px;">
+        <h3 style="text-align: center;">Demo Video</h3>
+        <div class="card card-video" style="margin-top:20px; max-width: 800px; margin-left: auto; margin-right: auto;">
+            <iframe width="100%" style="aspect-ratio: 16 / 9;" src="https://www.youtube.com/embed/4EvHpTYOv-o?si=TFBzC0RwPHUVy9W4" title="DPoser-X: Diffusion-based Whole-body Human Pose Prior" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div style="margin-top: 50px;">
+        <h3 style="text-align: center;">Methodology Overview</h3>
+        <div class="card" style="padding: 10px; margin-top:20px;">
+            <img src="./assets/figures/methods.png" alt="Methodology Overview" style="width: 100%;">
+            <p style="margin:15px; text-align: justify;">
+                Overview of the DPoser-X optimization framework. [cite_start]The model treats various pose-centric tasks as inverse problems and solves them using variational diffusion sampling with a novel truncated timestep scheduling[cite: 257, 461]. [cite_start]DPoser regularization guides the optimization by computing a loss based on a one-step denoising estimation, ensuring the resulting pose aligns with a plausible distribution[cite: 326, 328]. [cite_start]For whole-body modeling, a mixed training strategy combines part-specific and whole-body datasets to capture dependencies between body parts while enhancing generalization[cite: 621, 625].
+            </p>
+        </div>
+    </div>
+
+    <h2 style="text-align: center; margin-top: 50px; margin-bottom: 30px; font-weight: bold;">Visual Results</h2>
+
+    <hr>
+    <h3 style="text-align: center; margin-top: 40px;">🤸 Whole-Body Tasks</h3>
+
+    <div class="results-section">
+      <h4 class="results-subtitle">Pose Generation</h4>
+      <div class="card">
+        <div class="row m-2">
+            <div class="col-md-6">
+                <img src="./assets/figures/wholebody/generation/mixed_training.png" alt="Mixed Training Generation">
+                [cite_start]<p class="caption"><b>DPoser-X (Ours) with Mixed Training.</b> This strategy balances diversity and realism by combining whole-body and part-only datasets[cite: 621, 821].</p>
+            </div>
+            <div class="col-md-6">
+                <img src="./assets/figures/wholebody/generation/direct_training.png" alt="Direct Training Generation">
+                [cite_start]<p class="caption"><b>DPoser-X with Fused Module.</b> Training only on whole-body data produces plausible but less diverse poses[cite: 487].</p>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-section">
+        <h4 class="results-subtitle">Human Mesh Recovery (HMR)</h4>
+        <div class="card">
+            <div class="row m-2">
+                <div class="col-md-6">
+                    <img src="./assets/figures/wholebody/hmr/case1.png" alt="Whole-body HMR Case 1">
+                </div>
+                <div class="col-md-6">
+                    <img src="./assets/figures/wholebody/hmr/case2.png" alt="Whole-body HMR Case 2">
+                </div>
+            </div>
+            [cite_start]<p class="caption">DPoser-X recovers plausible whole-body poses from imperfect 2D keypoints, outperforming other methods that struggle with noisy inputs[cite: 898, 899]. [cite_start]When combined with SOTA models like SMPLer-X, it further refines the results, especially for hands[cite: 906].</p>
+        </div>
+    </div>
+
+    <div class="results-section">
+        <h4 class="results-subtitle">Pose Completion</h4>
+        <div class="card">
+            <img src="./assets/figures/wholebody/completion/all_case.png" alt="Whole-body Pose Completion">
+            [cite_start]<p class="caption">In challenging completion tasks (e.g., a hand is masked), DPoser-X effectively models interdependencies between body parts to generate multiple, diverse, and plausible completions[cite: 823, 824, 826].</p>
+        </div>
+    </div>
+
+
+    <hr>
+    <h3 style="text-align: center; margin-top: 50px;">🧍 Body-only Tasks</h3>
+
+    <div class="results-section">
+      <h4 class="results-subtitle">Pose Generation</h4>
+      <div class="card">
+          <div class="row m-2">
+              <div class="col-md-6"><img src="assets/figures/body/generation/DPoser.png"><p class="caption text-center"><b>DPoser (Ours)</b></p></div>
+              [cite_start]<div class="col-md-6"><img src="assets/figures/body/generation/VPoser.png"><p class="caption text-center">VPoser [cite: 31]</p></div>
+              [cite_start]<div class="col-md-6"><img src="assets/figures/body/generation/PoseNDF.png"><p class="caption text-center">Pose-NDF [cite: 44]</p></div>
+              [cite_start]<div class="col-md-6"><img src="assets/figures/body/generation/GMM.png"><p class="caption text-center">GMM [cite: 1]</p></div>
+          </div>
+          [cite_start]<p class="caption">DPoser generates visually diverse and realistic poses, indicating a well-learned prior distribution[cite: 679]. [cite_start]In contrast, VPoser shows limited diversity, while Pose-NDF and GMM can produce unnatural outputs[cite: 680, 681].</p>
+      </div>
+    </div>
+
+    <div class="results-section">
+        <h4 class="results-subtitle">Human Mesh Recovery (HMR)</h4>
+        <div class="card">
+            <img src="./assets/figures/body/hmr/case1.png" alt="Body HMR from scratch">
+            [cite_start]<p class="caption"><b>Fitting from scratch:</b> DPoser surpasses other priors when optimizing from a mean pose initialization[cite: 731].</p>
+            <hr>
+            <img src="./assets/figures/body/hmr/case2.png" alt="Body HMR with CLIFF initialization">
+            [cite_start]<p class="caption"><b>Refining SOTA:</b> DPoser effectively refines initial estimates from regression-based models like CLIFF [cite: 22][cite_start], achieving better alignment with the image[cite: 732].</p>
+        </div>
+    </div>
+
+    <div class="results-section">
+      <h4 class="results-subtitle">Motion Denoising</h4>
+      <div class="card">
+          <div class="row m-2">
+              <div class="col-md-6"><img src="./assets/figures/body/motion/noise40mm.gif" alt="Motion Denoising 40mm noise"><p class="caption text-center">Input with 40mm Gaussian noise.</p></div>
+              <div class="col-md-6"><img src="./assets/figures/body/motion/noise100mm.gif" alt="Motion Denoising 100mm noise"><p class="caption text-center">Input with 100mm Gaussian noise.</p></div>
+              <div class="col-md-6"><img src="./assets/figures/body/motion/left_arm.gif" alt="Motion Denoising with left arm occluded"><p class="caption text-center">Input with left arm occluded.</p></div>
+              <div class="col-md-6"><img src="./assets/figures/body/motion/right_body.gif" alt="Motion Denoising with right leg occluded"><p class="caption text-center">Input with right leg occluded.</p></div>
+          </div>
+          [cite_start]<p class="caption">Though designed as a single-frame prior, DPoser excels at motion denoising, outperforming even specialized temporal models by recovering clean pose sequences from noisy or incomplete 3D joint data[cite: 733, 741].</p>
+      </div>
+    </div>
+    
+    <div class="results-section">
+        <h4 class="results-subtitle">Pose Completion</h4>
+        <div class="card">
+            <div class="row m-2">
+                <div class="col-md-6">
+                    <img src="./assets/figures/body/completion/case1.png" alt="Body Pose Completion Case 1">
+                     <p class="caption text-center">Completion with left leg occluded.</p>
+                </div>
+                <div class="col-md-6">
+                    <img src="./assets/figures/body/completion/case2.png" alt="Body Pose Completion Case 2">
+                     <p class="caption text-center">Completion with torso occluded.</p>
+                </div>
+            </div>
+             [cite_start]<p class="caption">DPoser can generate a multitude of plausible completions for partially observed poses, showcasing its strong generalization capabilities where other methods may fail[cite: 2055].</p>
+        </div>
+    </div>
+
+    <hr>
+    <h3 style="text-align: center; margin-top: 50px;">✋ Hand-only Tasks</h3>
+    <div class="results-section">
+      <div class="card">
+          <div class="row m-2">
+              <div class="col-md-6">
+                  <h4 class="results-subtitle">Pose Generation</h4>
+                  <img src="./assets/figures/hand/generation/DPoser.png" alt="Hand Pose Generation">
+                  [cite_start]<p class="caption">DPoser generates diverse and realistic hand poses, outperforming competitors in both fidelity and variety[cite: 2072, 2073].</p>
+              </div>
+              <div class="col-md-6">
+                  <h4 class="results-subtitle">Inverse Kinematics (IK)</h4>
+                  <img src="./assets/figures/hand/ik/all_case.png" alt="Hand Inverse Kinematics">
+                  [cite_start]<p class="caption">DPoser robustly recovers accurate hand poses from sparse or noisy keypoints, reducing error by over 50% in sparse settings compared to other methods[cite: 745].</p>
+              </div>
+          </div>
+          <hr>
+          <h4 class="results-subtitle">Hand Mesh Recovery</h4>
+          <div class="row m-2">
+              <div class="col-md-6"><img src="./assets/figures/hand/hmr/case1.png" alt="Hand HMR Case 1"></div>
+              <div class="col-md-6"><img src="./assets/figures/hand/hmr/case2.png" alt="Hand HMR Case 2"></div>
+          </div>
+          [cite_start]<p class="caption">Our model consistently recovers natural hand meshes that align well with the observed 2D keypoints, both from scratch and when refining SOTA initializations[cite: 2153, 2216].</p>
+      </div>
+    </div>
+
+
+    <hr>
+    <h3 style="text-align: center; margin-top: 50px;">🙂 Face-only Tasks</h3>
+    <div class="results-section">
+      <div class="card">
+        <h4 class="results-subtitle">Pose Generation</h4>
+          <div class="row m-2">
+              <div class="col-md-6">
+                  <img src="./assets/figures/face/generation/shape.png" alt="Face Shape Generation">
+                  <p class="caption text-center">Generated Face Shapes</p>
+              </div>
+              <div class="col-md-6">
+                  <img src="./assets/figures/face/generation/expression.png" alt="Face Expression Generation">
+                  <p class="caption text-center">Generated Facial Expressions</p>
+              </div>
+          </div>
+          [cite_start]<p class="caption">DPoser captures a broader range of subtle variations in facial shape and expression compared to alternatives, demonstrating superior modeling of the underlying data distribution[cite: 2226, 2227].</p>
+          <hr>
+          <h4 class="results-subtitle">Face Reconstruction</h4>
+          <div class="row m-2">
+            <div class="col-md-6"><img src="./assets/figures/face/reconstruction/case1.png" alt="Face Reconstruction Case 1"></div>
+            <div class="col-md-6"><img src="./assets/figures/face/reconstruction/case2.png" alt="Face Reconstruction Case 2"></div>
+          </div>
+          [cite_start]<p class="caption">Our model demonstrates a strong ability to reconstruct realistic faces, handling challenging occlusions and side views effectively, and achieving the lowest reconstruction errors on the NOW benchmark[cite: 812, 815].</p>
+      </div>
+    </div>
+
+
+    <div id="bibtex" style="margin-top: 50px;">
+        <h3 style="text-align: center;">Citation</h3>
+        <div class="bibtex">
+            <pre><code class="language-bibtex" data-lang="bibtex">@article{lu2024dposerx,
+    title   = {DPoser-X: Diffusion Model as Robust 3D Whole-body Human Pose Prior},
+    author  = {Lu, Junzhe and Lin, Jing and Dou, Hongkun and Zeng, Ailing and Deng, Yue and Zhang, Yulun and Wang, Haoqian},
+    journal = {arXiv preprint arXiv:2312.05541},
+    year    = {2024}
+}</code></pre>
+        </div>
+    </div>
+
+    <br>
+    <p style="text-align:right;font-size:small;">
+      The website template was adapted from <a href="https://lhchen.top/HumanTOMATO/" target="_blank">HumanTOMATO Project</a>.
+    </p>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha256-SyTu6CwrfOhaznYZPoolVw2rxoY7lKYKQvqbtqN93HI=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script>
+  <script src="./assets/js/common.js"></script>
+</body>
+</html>
+```

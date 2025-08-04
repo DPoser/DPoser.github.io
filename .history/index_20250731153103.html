@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>DPoser-X: Diffusion Model as Robust 3D Whole-body Human Pose Prior</title>
+  <meta name="author" content="Junzhe Lu">
+  <meta name="description" content="Diffusion Model as Robust 3D Whole-body Human Pose Prior">
+  <meta name="keywords" content="DPoser, DPoser-X, Diffusion Models, Human Pose Prior">
+
+  <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/mdb.min.css">
+
+  <link rel="stylesheet" href="./assets/css/all.min.css">
+  <link rel="stylesheet" href="./assets/css/academicons.min.css">
+  <link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+  <link rel="icon" href="./assets/figures/icon.png">
+  <link rel="stylesheet" href="./assets/css/main.css">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VHPFHC4JTP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-VHPFHC4JTP');
+  </script>
+</head>
+
+<body>
+  <div class="container project_container mt-5">
+    <header class="project-title" style="text-align: center;">
+      <h1 class="project-title" style="font-weight: bold; color: #404040">
+        <img src="./assets/figures/icon.png" style="height:5%; width:5%">
+        DPoser-X: Diffusion Model as Robust 3D Whole-body Human Pose Prior</h1>
+      <h3>
+        <a href="https://scholar.google.com/citations?user=hnJ4NIYAAAAJ" target="_blank" rel="noopener noreferrer">Junzhe Lu</a><sup>1</sup>,
+        <a href="https://jinglin7.github.io" target="_blank" rel="noopener noreferrer">Jing Lin</a><sup>2</sup>,
+        <a href="https://scholar.google.com/citations?user=pSNEkEwAAAAJ" target="_blank" rel="noopener noreferrer">Hongkun Dou</a><sup>1</sup>,<br>
+        <a href="https://ailingzeng.site/" target="_blank" rel="noopener noreferrer">Ailing Zeng</a><sup>3</sup>,
+        <a href="https://shi.buaa.edu.cn/yuedeng/en/index.htm" target="_blank" rel="noopener noreferrer">Yue Deng</a><sup>1</sup>,
+        <a href="https://yulunzhang.com/" target="_blank" rel="noopener noreferrer">Yulun Zhang</a><sup>4</sup>,
+        and
+        <a href="https://www.sigs.tsinghua.edu.cn/whq_en/main.htm" target="_blank" rel="noopener noreferrer">Haoqian Wang</a><sup>2</sup>
+      </h3>
+      <h5><sup>1</sup>Beihang University, <sup>2</sup>Tsinghua University, <sup>3</sup>International Digital Economy Academy (IDEA), <sup>4</sup>ETH Zürich
+      </h5>
+
+      <div class="publications project-links">
+        <a href="https://arxiv.org/abs/2312.05541" class="btn" role="button" target="_blank" rel="noopener noreferrer">arXiv</a>
+        <a href="https://youtu.be/4EvHpTYOv-o" class="btn" role="button" target="_blank" rel="noopener noreferrer">Video</a>
+        <a href="https://github.com/careless-lu/DPoser" class="btn" role="button" target="_blank" rel="noopener noreferrer">Code</a>
+      </div>
+      <br>
+
+      <img src="./assets/figures/teaser.png" style="width: 100%;">
+
+    </header>
+
+    <div class="h-100 d-flex align-items-center justify-content-center" style="margin-top: 30px">
+      <div class="project-narrow" id="abstract" style="text-align: justify;">
+        <h3 style="text-align: center;">Abstract</h3>
+        <i>
+            We present DPoser-X, a diffusion-based prior model for 3D whole-body human poses. Building a versatile and robust full-body human pose prior remains challenging due to the inherent complexity of articulated human poses and the scarcity of high-quality whole-body pose datasets. To address these limitations, we introduce a Diffusion model as body Pose prior (DPoser) and extend it to DPoser-X for expressive whole-body human pose modeling. Our approach unifies various pose-centric tasks as inverse problems, solving them through variational diffusion sampling. To enhance performance on downstream applications, we introduce a novel truncated timestep scheduling method specifically designed for pose data characteristics. We also propose a masked training mechanism that effectively combines whole-body and part-specific datasets, enabling our model to capture interdependencies between body parts while avoiding overfitting to specific actions. Extensive experiments demonstrate DPoser-X's robustness and versatility across multiple benchmarks for body, hand, face, and full-body pose modeling. Our model consistently outperforms state-of-the-art alternatives, establishing a new benchmark for whole-body human pose prior modeling.
+        </i>
+      </div>
+    </div>
+
+    <div class="h-100 d-flex align-items-center justify-content-center" style="margin-top: 30px">
+      <div class="project-narrow" id="architecture" style="text-align: justify;">
+        <h3 style="text-align: center;">Demo Video</h3>
+      </div>
+    </div>
+
+    <div class="center-container">
+      <div class="card card-video" style="margin-top:20px">
+        <iframe width="100%" style="aspect-ratio: 16 / 9;" src="https://www.youtube.com/embed/4EvHpTYOv-o?si=TFBzC0RwPHUVy9W4"
+          title="DPoser-X: Diffusion Model as Robust 3D Whole-body Human Pose Prior" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div style="margin-top:50px; padding: 0px !important">
+      <h3 style="text-align: center;">Methodology Overview</h3>
+      <div tab-content figure>
+        <div class="tab-pane fade show active" id="h36m" role="tabpanel" aria-labelledby="h36m-list"
+          style="padding: 0px !important">
+          <div class="card" style="padding: 10px !important; margin-top:10px">
+            <div class="tab-content figure" id="nav-tabContent">
+              <div class="tab-pane fade show active gif" id="switch_eg_1" role="tabpanel">
+                <img src="./assets/figures/DPoser_pipeline.png" style="width: 100%;">
+                <p style="margin:10px; text-align: justify;">
+                    Overview of the DPoser-regularized optimization framework. Panel (a) shows the unified framework from initial to final poses through DPoser-regularized steps. Panel (b) details the optimization step: task inputs (e.g., 2D keypoints in human mesh recovery) and current poses are used to compute the measurement loss based on the degradation pattern \( \mathcal{A}(\cdot) \) (e.g., camera projection). Meanwhile, DPoser regularization introduces noise to the current pose and applies a one-step denoiser to compute \(L_\text{DPoser}\). Our DPoser regularization encourages the current pose towards a more plausible pose distribution.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="margin-top:50px; padding: 0px !important">
+        <h2 style="text-align: center; font-weight: bold;">Body-only Tasks</h2>
+    </div>
+
+    <div style="margin-top:20px; padding: 0px !important">
+      <h3 style="text-align: center; margin-bottom:20px">Pose Generation
+      </h3>
+      <div tab-content figure>
+        <div class="tab-pane fade show active" id="h36m" role="tabpanel" aria-labelledby="h36m-list"
+          style="padding: 0px !important">
+          <div class="card" style="padding: 10px !important; margin-top:10px">
+            <div class="tab-content figure" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="perform" role="tabpanel" style="display: flex; justify-content: space-around;">
+                  <div style="width: 49%;">
+                    <img class="gif" src="assets/figures/body/generation/VPoser.png">
+                    <a style="text-align: center; display: inline-block; width: 100%; font-size: larger;">VPoser</a>
+                  </div>
+                  <div style="width: 49%;">
+                    <img class="gif" src="assets/figures/body/generation/GMM.png">
+                    <a style="text-align: center; display: inline-block; width: 100%; font-size: larger;">GMM</a>
+                  </div>
+                </div>
+                <div class="tab-pane fade show active" id="perform" role="tabpanel" style="display: flex; justify-content: space-around; margin-top: 20px;">
+                  <div style="width: 49%;">
+                    <img class="gif" src="assets/figures/body/generation/PoseNDF.png">
+                    <a style="text-align: center; display: inline-block; width: 100%; font-size: larger;">Pose-NDF</a>
+                  </div>
+                  <div style="width: 49%;">
+                    <img class="gif" src="assets/figures/body/generation/DPoser.png">
+                    <a style="text-align: center; display: inline-block; width: 100%; font-size: larger; font-weight: bold;">DPoser(Ours)</a>
+                  </div>
+                </div>
+              </div>
+              <p style="text-align: justify; margin: 10px;">
+                In pose generation, DPoser generates visually diverse and realistic poses, indicating a well-learned prior distribution. In contrast, VPoser shows limited diversity due to its mean-centric nature, while GMM and Pose-NDF fall short in naturalism.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    <div style="margin-top:50px; padding: 0px !important">
+      <h3 style="text-align: center; margin-bottom:20px">Pose Completion</h3>
+      <div tab-content figure>
+        <div class="tab-pane fade show active" id="pose-completion-body" role="tabpanel" style="padding: 0px !important">
+          <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="dropdown list-group">
+              <button class="btn dropdown-toggle" style="max-width:600px" type="button" id="pose-completion-body-btn"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="selection">Case 1: Left Leg Occlusion</span>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="list-tab-body-completion" role="tablist">
+                <a class="dropdown-item dropdown-item-action" href="#case1-body-completion" data-toggle="list"
+                  role="tab">Case 1: Left Leg Occlusion</a>
+                <a class="dropdown-item dropdown-item-action" href="#case2-body-completion" data-toggle="list"
+                  role="tab">Case 2: Torso Occlusion</a>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding: 10px !important; margin-top:10px; margin-left: auto; margin-right: auto; max-width: 1170px;">
+            <div class="tab-content figure" id="nav-tabContent-body-completion">
+              <div class="tab-pane fade show active gif" id="case1-body-completion" role="tabpanel">
+                <img class="gif" src="./assets/figures/body/completion/case1.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Pose completion with left leg occlusion.</i></b></p>
+              </div>
+              <div class="tab-pane fade" id="case2-body-completion" role="tabpanel">
+                <img class="gif" src="./assets/figures/body/completion/case2.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Pose completion with torso occlusion.</i></b></p>
+              </div>
+              <p style="text-align: justify; margin: 10px;">
+                In pose completion, DPoser is unique in its ability to provide multiple plausible solutions for partially observed poses, a challenge where competing methods often fall short due to limitations in generalization.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="margin-top:50px; padding: 0px !important">
+      <h3 style="text-align: center; margin-bottom:20px">Human Mesh Recovery</h3>
+      <div tab-content figure>
+        <div class="tab-pane fade show active" id="hmr-body" role="tabpanel" style="padding: 0px !important">
+          <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="dropdown list-group">
+              <button class="btn dropdown-toggle" style="max-width:600px" type="button" id="hmr-body-btn"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="selection">Fitting from Scratch</span>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="list-tab-hmr-body" role="tablist">
+                <a class="dropdown-item dropdown-item-action" href="#case1-hmr-body" data-toggle="list"
+                  role="tab">Fitting from Scratch</a>
+                <a class="dropdown-item dropdown-item-action" href="#case2-hmr-body" data-toggle="list"
+                  role="tab">Initialization with CLIFF</a>
+                <a class="dropdown-item dropdown-item-action" href="#more-hmr-body" data-toggle="list"
+                  role="tab">More Examples</a>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding: 10px !important; margin-top:10px; margin-left: auto; margin-right: auto; max-width: 1170px;">
+            <div class="tab-content figure" id="nav-tabContent-hmr-body">
+              <div class="tab-pane fade show active gif" id="case1-hmr-body" role="tabpanel">
+                <img class="gif" src="./assets/figures/body/hmr/case1.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Human mesh recovery fitting from scratch.</i></b></p>
+              </div>
+              <div class="tab-pane fade" id="case2-hmr-body" role="tabpanel">
+                <img class="gif" src="./assets/figures/body/hmr/case2.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Human mesh recovery with CLIFF initialization.</i></b></p>
+              </div>
+              <div class="tab-pane fade" id="more-hmr-body" role="tabpanel">
+                  <div style="display: flex; flex-wrap: wrap; justify-content: space-around; max-width: 1170px; margin: 20px auto;">
+                      <div style="flex: 0 0 48%; margin-bottom: 5px;">
+                          <img src="./assets/figures/body/hmr/EHF.png" alt="EHF dataset" style="width: 100%;">
+                          <p style="text-align: center; font-size: larger;">EHF dataset</p>
+                      </div>
+                      <div style="flex: 0 0 48%; margin-bottom: 5px;">
+                          <img src="./assets/figures/body/hmr/COCO.png" alt="COCO dataset" style="width: 100%;">
+                          <p style="text-align: center; font-size: larger;">COCO dataset</p>
+                      </div>
+                      <div style="flex: 0 0 48%; margin-bottom: -20px;">
+                          <img src="./assets/figures/body/hmr/3DPW.png" alt="3DPW dataset" style="width: 100%;">
+                          <p style="text-align: center; font-size: larger;">3DPW dataset</p>
+                      </div>
+                      <div style="flex: 0 0 48%; margin-bottom: -20px;">
+                          <img src="./assets/figures/body/hmr/UBody.png" alt="UBody dataset" style="width: 100%;">
+                          <p style="text-align: center; font-size: larger;">UBody dataset</p>
+                      </div>
+                    </div>
+                <p style="text-align: center; color:purple"><b><i>Human mesh recovery on various datasets.</i></b></p>
+              </div>
+              <p style="text-align: justify; margin: 10px;">
+                In Human Mesh Recovery (HMR), DPoser adeptly estimates poses from single images, achieving more natural poses. It can also refine initial pose estimations from models like CLIFF, achieving better alignment with images.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:50px; padding: 0px !important">
+      <h3 style="text-align: center; margin-bottom:20px">Motion Denoising</h3>
+      <div tab-content figure>
+        <div class="tab-pane fade show active" id="motion-denoising" role="tabpanel" style="padding: 0px !important">
+          <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="dropdown list-group">
+              <button class="btn dropdown-toggle" style="max-width:600px" type="button" id="motion-denoising-btn"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="selection">Gaussian Noise (40mm)</span>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="list-tab-motion-denoising" role="tablist">
+                <a class="dropdown-item dropdown-item-action" href="#noise40mm" data-toggle="list" role="tab">Gaussian Noise (40mm)</a>
+                <a class="dropdown-item dropdown-item-action" href="#noise100mm" data-toggle="list" role="tab">Gaussian Noise (100mm)</a>
+                <a class="dropdown-item dropdown-item-action" href="#left_arm" data-toggle="list" role="tab">Left Arm Occlusion</a>
+                <a class="dropdown-item dropdown-item-action" href="#right_body" data-toggle="list" role="tab">Right Body Occlusion</a>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding: 10px !important; margin-top:10px; margin-left: auto; margin-right: auto; max-width: 1170px;">
+            <div class="tab-content figure" id="nav-tabContent-motion-denoising">
+              <div class="tab-pane fade show active gif" id="noise40mm" role="tabpanel">
+                <img class="gif" src="./assets/figures/body/motion/noise40mm.gif" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Motion denoising with 40mm Gaussian noise.</i></b></p>
+              </div>
+              <div class="tab-pane fade" id="noise100mm" role="tabpanel">
+                <img class="gif" src="./assets/figures/body/motion/noise100mm.gif" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Motion denoising with 100mm Gaussian noise.</i></b></p>
+              </div>
+              <div class="tab-pane fade" id="left_arm" role="tabpanel">
+                <img class="gif" src="./assets/figures/body/motion/left_arm.gif" style="width: 100%;">
+                 <p style="text-align: center; color:purple"><b><i>Motion denoising with left arm occlusion.</i></b></p>
+              </div>
+              <div class="tab-pane fade" id="right_body" role="tabpanel">
+                <img class="gif" src="./assets/figures/body/motion/right_body.gif" style="width: 100%;">
+                 <p style="text-align: center; color:purple"><b><i>Motion denoising with right body occlusion.</i></b></p>
+              </div>
+              <p style="text-align: justify; margin: 10px;">In motion denoising, DPoser excels at reconstructing realistic pose sequences from noisy and incomplete 3D joint data, and its effectiveness as a single-frame pose prior extends well to sequences, ensuring lifelike movements.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:50px; padding: 0px !important">
+        <h2 style="text-align: center; font-weight: bold;">Hand-only Tasks</h2>
+    </div>
+
+    <div style="margin-top:20px; padding: 0px !important">
+      <h3 style="text-align: center; margin-bottom:20px">Hand Pose Generation</h3>
+        <div class="tab-pane fade show active" id="hand-generation" role="tabpanel" style="padding: 0px !important">
+          <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="dropdown list-group">
+              <button class="btn dropdown-toggle" style="max-width:600px" type="button" id="hand-generation-btn"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="selection">DPoser (Ours)</span>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="list-tab-hand-generation" role="tablist">
+                <a class="dropdown-item dropdown-item-action" href="#dposer-hand" data-toggle="list" role="tab">DPoser (Ours)</a>
+                <a class="dropdown-item dropdown-item-action" href="#vposer-hand" data-toggle="list" role="tab">VPoser</a>
+                <a class="dropdown-item dropdown-item-action" href="#nrdf-hand" data-toggle="list" role="tab">NRDF</a>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding: 10px !important; margin-top:10px; margin-left: auto; margin-right: auto; max-width: 1170px;">
+            <div class="tab-content figure" id="nav-tabContent-hand-generation">
+              <div class="tab-pane fade show active gif" id="dposer-hand" role="tabpanel">
+                <img class="gif" src="assets/figures/hand/generation/DPoser.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>DPoser hand pose generation.</i></b></p>
+              </div>
+              <div class="tab-pane fade" id="vposer-hand" role="tabpanel">
+                <img class="gif" src="assets/figures/hand/generation/VPoser.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>VPoser hand pose generation.</i></b></p>
+              </div>
+              <div class="tab-pane fade" id="nrdf-hand" role="tabpanel">
+                <img class="gif" src="assets/figures/hand/generation/NRDF.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>NRDF hand pose generation.</i></b></p>
+              </div>
+              <p style="text-align: justify; margin: 10px;">In hand pose generation, DPoser generates a wide variety of diverse and realistic hand poses. This stands in contrast to competing methods; for instance, VPoser tends to produce poses with limited diversity, while NRDF struggles with realism.</p>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    <div style="margin-top:50px; padding: 0px !important">
+      <h3 style="text-align: center; margin-bottom:20px">Hand Inverse Kinematics</h3>
+      <div class="card" style="padding: 10px !important; margin-top:10px">
+        <img class="gif" src="assets/figures/hand/ik/all_case.png" style="width: 100%;">
+        <p style="text-align: justify; margin: 10px;">In hand inverse kinematics, DPoser maintains stability and precision, showcasing its superior ability to handle noisy input and recover plausible hand poses even under challenging conditions such as a) noisy keypoints, b) fingertip keypoints, c) partial finger keypoints, and d) sparse keypoints settings.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:50px; padding: 0px !important">
+      <h3 style="text-align: center; margin-bottom:20px">Hand Mesh Recovery</h3>
+        <div class="tab-pane fade show active" id="hmr-hand" role="tabpanel" style="padding: 0px !important">
+          <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="dropdown list-group">
+              <button class="btn dropdown-toggle" style="max-width:600px" type="button" id="hmr-hand-btn"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="selection">Fitting from scratch</span>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="list-tab-hmr-hand" role="tablist">
+                <a class="dropdown-item dropdown-item-action" href="#mean-pose-hand" data-toggle="list" role="tab">Fitting from scratch</a>
+                <a class="dropdown-item dropdown-item-action" href="#hand4whole-hand" data-toggle="list" role="tab">Initialization with Hand4Whole</a>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding: 10px !important; margin-top:10px; margin-left: auto; margin-right: auto; max-width: 1170px;">
+            <div class="tab-content figure" id="nav-tabContent-hmr-hand">
+              <div class="tab-pane fade show active gif" id="mean-pose-hand" role="tabpanel">
+                <img class="gif" src="./assets/figures/hand/hmr/case1.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Hand mesh recovery fitting from scratch.</i></b></p>
+              </div>
+              <div class="tab-pane fade" id="hand4whole-hand" role="tabpanel">
+                <img class="gif" src="./assets/figures/hand/hmr/case2.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Hand mesh recovery with Hand4Whole initialization.</i></b></p>
+              </div>
+              <p style="text-align: justify; margin: 10px;">In hand mesh recovery, DPoser consistently outperforms competing methods with superior accuracy and natural hand mesh reconstruction. Performance is further enhanced when using Hand4Whole initialization, highlighting DPoser's ability to refine results from existing SOTA mesh recovery models. By leveraging ground truth keypoints, DPoser consistently recovers natural hand meshes that align well with observed 2D keypoints.</p>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    <div style="margin-top:50px; padding: 0px !important">
+        <h2 style="text-align: center; font-weight: bold;">Face-only Tasks</h2>
+    </div>
+
+    <div style="margin-top:20px; padding: 0px !important">
+      <h3 style="text-align: center; margin-bottom:20px">Face Generation</h3>
+        <div class="tab-pane fade show active" id="face-generation" role="tabpanel" style="padding: 0px !important">
+          <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="dropdown list-group">
+              <button class="btn dropdown-toggle" style="max-width:600px" type="button" id="face-generation-btn"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="selection">Shape</span>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="list-tab-face-generation" role="tablist">
+                <a class="dropdown-item dropdown-item-action" href="#shape-face" data-toggle="list" role="tab">Shape</a>
+                <a class="dropdown-item dropdown-item-action" href="#expression-face" data-toggle="list" role="tab">Expression</a>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding: 10px !important; margin-top:10px; margin-left: auto; margin-right: auto; max-width: 1170px;">
+            <div class="tab-content figure" id="nav-tabContent-face-generation">
+              <div class="tab-pane fade show active gif" id="shape-face" role="tabpanel">
+                <img class="gif" src="./assets/figures/face/generation/shape.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Face shape generation.</i></b></p>
+              </div>
+              <div class="tab-pane fade" id="expression-face" role="tabpanel">
+                <img class="gif" src="./assets/figures/face/generation/expression.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Facial expression generation.</i></b></p>
+              </div>
+              <p style="text-align: justify; margin: 10px;">In face generation, DPoser can generate a wide variety of realistic face shapes and expressions. It captures a broader range of subtle variations, especially in expressions, while maintaining fidelity compared to VPoser.</p>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    <div style="margin-top:50px; padding: 0px !important">
+      <h3 style="text-align: center; margin-bottom:20px">Face Reconstruction</h3>
+        <div class="tab-pane fade show active" id="face-reconstruction" role="tabpanel" style="padding: 0px !important">
+          <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="dropdown list-group">
+              <button class="btn dropdown-toggle" style="max-width:600px" type="button" id="face-reconstruction-btn"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="selection">Fitting from Scratch</span>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="list-tab-face-reconstruction" role="tablist">
+                <a class="dropdown-item dropdown-item-action" href="#scratch-face" data-toggle="list" role="tab">Fitting from Scratch</a>
+                <a class="dropdown-item dropdown-item-action" href="#mica-face" data-toggle="list" role="tab">Initialization with MICA</a>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding: 10px !important; margin-top:10px; margin-left: auto; margin-right: auto; max-width: 1170px;">
+            <div class="tab-content figure" id="nav-tabContent-face-reconstruction">
+              <div class="tab-pane fade show active gif" id="scratch-face" role="tabpanel">
+                <img class="gif" src="./assets/figures/face/reconstruction/case1.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Face reconstruction fitting from scratch.</i></b></p>
+              </div>
+              <div class="tab-pane fade" id="mica-face" role="tabpanel">
+                <img class="gif" src="./assets/figures/face/reconstruction/case2.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Face reconstruction with MICA initialization.</i></b></p>
+              </div>
+              <p style="text-align: justify; margin: 10px;">DPoser can reconstruct detailed and realistic face meshes, even in challenging scenarios with variations in side-view poses and complex expressions. While other methods often struggle to generalize, DPoser remains robust and highly accurate, handling the full diversity of facial shapes and expressions in real-world conditions.</p>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div style="margin-top:50px; padding: 0px !important">
+        <h2 style="text-align: center; font-weight: bold;">Whole-body Tasks</h2>
+    </div>
+
+    <div style="margin-top:20px; padding: 0px !important">
+      <h3 style="text-align: center; margin-bottom:20px">Whole-body Pose Generation</h3>
+        <div class="tab-pane fade show active" id="wholebody-generation" role="tabpanel" style="padding: 0px !important">
+          <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="dropdown list-group">
+              <button class="btn dropdown-toggle" style="max-width:600px" type="button" id="wholebody-generation-btn"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="selection">Mixed Training</span>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="list-tab-wholebody-generation" role="tablist">
+                <a class="dropdown-item dropdown-item-action" href="#mixed-wholebody" data-toggle="list" role="tab">Mixed Training</a>
+                <a class="dropdown-item dropdown-item-action" href="#direct-wholebody" data-toggle="list" role="tab">Direct Training</a>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding: 10px !important; margin-top:10px; margin-left: auto; margin-right: auto; max-width: 1170px;">
+            <div class="tab-content figure" id="nav-tabContent-wholebody-generation">
+              <div class="tab-pane fade show active gif" id="mixed-wholebody" role="tabpanel">
+                <img class="gif" src="./assets/figures/wholebody/generation/mixed_training.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Mixed training strategy.</i></b></p>
+              </div>
+              <div class="tab-pane fade" id="direct-wholebody" role="tabpanel">
+                <img class="gif" src="./assets/figures/wholebody/generation/direct_training.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Direct training strategy.</i></b></p>
+              </div>
+              <p style="text-align: justify; margin: 10px;">DPoser-X-mixed generates a diverse range of whole-body poses while maintaining realistic hand interactions and facial expressions. In contrast, DPoser-X-fused (direct training) retains high realism but produces less diverse results.</p>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    <div style="margin-top:50px; padding: 0px !important">
+      <h3 style="text-align: center; margin-bottom:20px">Whole-body Mesh Recovery</h3>
+        <div class="tab-pane fade show active" id="hmr-wholebody" role="tabpanel" style="padding: 0px !important">
+          <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="dropdown list-group">
+              <button class="btn dropdown-toggle" style="max-width:600px" type="button" id="hmr-wholebody-btn"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="selection">Fitting from Scratch</span>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="list-tab-hmr-wholebody" role="tablist">
+                <a class="dropdown-item dropdown-item-action" href="#case1-hmr-wholebody" data-toggle="list" role="tab">Fitting from Scratch</a>
+                <a class="dropdown-item dropdown-item-action" href="#case2-hmr-wholebody" data-toggle="list" role="tab">Initialization with SMPLer-X</a>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding: 10px !important; margin-top:10px; margin-left: auto; margin-right: auto; max-width: 1170px;">
+            <div class="tab-content figure" id="nav-tabContent-hmr-wholebody">
+              <div class="tab-pane fade show active gif" id="case1-hmr-wholebody" role="tabpanel">
+                <img class="gif" src="./assets/figures/wholebody/hmr/case1.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Fitting from scratch.</i></b></p>
+              </div>
+              <div class="tab-pane fade" id="case2-hmr-wholebody" role="tabpanel">
+                <img class="gif" src="./assets/figures/wholebody/hmr/case2.png" style="width: 100%;">
+                <p style="text-align: center; color:purple"><b><i>Initialization with SMPLer-X.</i></b></p>
+              </div>
+              <p style="text-align: justify; margin: 10px;">DPoser-X outperforms other methods in handling full-body mesh recovery, demonstrating its robustness in both body and hand mesh reconstruction. It can recover plausible whole-body poses from imperfect 2D keypoints, whereas other methods struggle with noisy inputs.</p>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    <div style="margin-top:50px; padding: 0px !important">
+      <h3 style="text-align: center; margin-bottom:20px">Whole-body Pose Completion</h3>
+      <div class="card" style="padding: 10px !important; margin-top:10px">
+        <img class="gif" src="assets/figures/wholebody/completion/all_case.png" style="width: 100%;">
+        <p style="text-align: justify; margin: 10px;">DPoser-X effectively learns the correlation between whole-body parts, achieving the lowest min-MPVPE and reflecting task uncertainty well with high APD.</p>
+      </div>
+    </div>
+
+
+    <div class="h-100 d-flex align-items-center justify-content-center" style="margin-top: 30px">
+      <div class="project-narrow" id="bibtex" style="text-align: justify;">
+        <h3 style="text-align: center;">Citation</h3>
+        <div class="bibtex">
+          <figure class="highlight">
+            <pre><code class="language-bibtex" data-lang="bibtex"><span class="nc">@article</span><span class="p">{</span><span class="nl">lu2023dposerx</span><span class="p">,</span>
+  <span class="na">title</span><span class="p">=</span><span class="s">{DPoser-X: Diffusion Model as Robust 3D Whole-body Human Pose Prior}</span><span class="p">,</span>
+  <span class="na">author</span><span class="p">=</span><span class="s">{Lu, Junzhe and Lin, Jing and Dou, Hongkun and Zeng, Ailing and Deng, Yue and Zhang, Yulun and Wang, Haoqian}</span><span class="p">,</span>
+  <span class="na">journal</span><span class="p">=</span><span class="s">{arXiv preprint arXiv:2312.05541}</span><span class="p">,</span>
+  <span class="na">year</span><span class="p">=</span><span class="s">{2023}</span>
+<span class="p">}</span></code></pre>
+          </figure>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <p style="text-align:right;font-size:small;">
+      The website template was adapted from <a href="https://lhchen.top/HumanTOMATO/">HumanTOMATO Project</a>.
+    </p>
+
+  </div>
+
+  <script src="./assets/js/jquery.min.js"></script>
+  <script src="./assets/js/popper.min.js"></script>
+  <script src="./assets/js/bootstrap.min.js"></script>
+  <script src="./assets/js/mdb.min.js"></script>
+  <script defer src="./assets/js/masonry.pkgd.min.js"></script>
+  <script defer src="./assets/js/imagesloaded.pkgd.min.js"></script>
+  <script defer src="./assets/js/mansory.js" type="text/javascript"></script>
+  <script src="./assets/js/medium-zoom.min.js"></script>
+  <script src="./assets/js/zoom.js"></script>
+  <script src="./assets/js/common.js"></script>
+  <script type="text/javascript" id="MathJax-script" src="./assets/js/tex-mml-chtml.js"></script>
+  <script defer src="./assets/js/polyfill.min.js"></script>
+
+  <script>
+    $(function () {
+      $(".dropdown-menu a").click(function () {
+        var selText = $(this).text();
+        $(this).closest('.dropdown').find(".selection").html(selText);
+      });
+    });
+  </script>
+</body>
+
+</html>
